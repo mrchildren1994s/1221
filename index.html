@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二分搜尋法演示</title>
+<style>
+
+        /* 水藍色背景 */
+
+        body { 
+
+            background-color: #e0f7fa; 
+
+            font-family: "微軟正黑體", sans-serif; 
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+
+        }
+
+        /* 白色卡片區塊 */
+
+        .container {
+
+            background-color: #ffffff;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 4px 15px rgba(0, 150, 200, 0.2);
+
+            text-align: center;
+
+            max-width: 500px;
+
+            width: 90%;
+
+            border: 2px solid #b2ebf2;
+
+        }
+
+        h2 { color: #006064; margin-bottom: 20px; }
+
+        /* 陣列顯示樣式 */
+
+        .array-display {
+
+            background-color: #f1f8e9;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            color: #333;
+
+            margin-bottom: 20px;
+
+            word-break: break-all;
+
+            font-size: 14px;
+
+        }
+
+        /* 輸入框樣式 */
+
+        input[type="number"] {
+
+            padding: 10px;
+
+            border: 2px solid #b2ebf2;
+
+            border-radius: 8px;
+
+            width: 80px;
+
+            font-size: 16px;
+
+            text-align: center;
+
+            margin-right: 10px;
+
+        }
+
+        /* 藍色按鈕 */
+
+        button { 
+
+            background-color: #0288d1; 
+
+            color: white;
+
+            padding: 10px 24px;
+
+            font-size: 16px;
+
+            border: none;
+
+            border-radius: 50px;
+
+            cursor: pointer;
+
+            transition: all 0.3s;
+
+        }
+
+        button:hover { background-color: #01579b; transform: translateY(-2px); }
+
+        /* 結果顯示區 */
+
+        .result-box { 
+
+            margin-top: 20px; 
+
+            padding: 15px; 
+
+            background: #fff3e0; /* 淡橘色背景突顯結果 */
+
+            border-radius: 10px;
+
+            color: #e65100;
+
+            font-weight: bold;
+
+            min-height: 24px;
+
+        }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>🔍 二分搜尋法 (Binary Search)</h2>
+<p>目前的資料陣列：</p>
+<div class="array-display">
+
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+</div>
+<div>
+<input type="number" id="targetInput" placeholder="輸入數字" value="3">
+<button onclick="bisearch()">開始搜尋</button>
+</div>
+<div id="output" class="result-box">
+
+            請輸入數字並搜尋...
+</div>
+</div>
+<script>
+
+        function bisearch() {
+
+            // 1. 定義陣列 (必須是已排序的)
+
+            let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+
+            // 2. 獲取使用者輸入的數字
+
+            let inputVal = document.getElementById("targetInput").value;
+
+            // 檢查是否為空
+
+            if (inputVal === "") {
+
+                alert("請輸入一個數字！");
+
+                return;
+
+            }
+
+            let key = parseInt(inputVal); // 轉成整數
+
+            // 3. 二分搜尋邏輯
+
+            let left = 0;
+
+            let right = arr.length - 1;
+
+            let find_fig = false;
+
+            let middle;
+
+            let count = 0; // 計算找了幾次
+
+            while (left <= right) {
+
+                count++; // 步驟計數
+
+                middle = Math.floor((left + right) / 2);
+
+                if (arr[middle] === key) {
+
+                    find_fig = true;
+
+                    // 找到後，顯示結果並跳出函式
+
+                    document.getElementById("output").innerHTML = 
+
+                        "✅ 找到了！數值 " + key + " 位於索引位置 " + middle + "<br>" +
+
+                        "(電腦共計算了 " + count + " 次)";
+
+                    return; 
+
+                } else if (arr[middle] > key) {
+
+                    right = middle - 1; // 往左邊找
+
+                } else {
+
+                    left = middle + 1;  // 往右邊找
+
+                }
+
+            }
+
+            // 4. 如果迴圈結束還沒找到
+
+            if (!find_fig) {
+
+                document.getElementById("output").innerHTML = "❌ 未找到元素 (該數字不在陣列中)";
+
+            }
+
+        }
+</script>
+</body>
+</html>
+ 
